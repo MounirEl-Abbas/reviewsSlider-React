@@ -1,35 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { FaChevronLeft, FaChevronRight, FaQuoteRight } from "react-icons/fa";
-import data from "./data";
+import React, {
+  FaChevronLeft,
+  FaChevronRight,
+  FaQuoteRight,
+} from "react-icons/fa";
 
-let person = 0;
-const Review = () => {
-  const [review, setReview] = useState(data);
-
-  useEffect(() => {
-    setReview(data[person]);
-  }, []);
-
-  const previousReview = (data) => {
-    person === 0 ? (person = 3) : (person -= 1);
-    setReview(data[person]);
-  };
-  const nextReview = (data) => {
-    person === 3 ? (person = 0) : (person += 1);
-    setReview(data[person]);
-  };
-
-  const randomReview = () => {
-    let randomPerson = Math.floor(Math.random() * data.length);
-
-    if (randomPerson === person) {
-      randomReview();
-    } else {
-      person = randomPerson;
-      setReview(data[randomPerson]);
-    }
-  };
-
+const Review = ({ previousReview, nextReview, randomReview, review }) => {
   const { id, name, job, image, text } = review;
   return (
     <>
@@ -44,15 +19,13 @@ const Review = () => {
         <p>{job}</p>
         <p>{text}</p>
         <div className="btn-container">
-          <button onClick={() => previousReview(data)}>
+          <button onClick={previousReview}>
             <FaChevronLeft />
           </button>
-          <button onClick={() => nextReview(data)}>
+          <button onClick={nextReview}>
             <FaChevronRight />
           </button>
-          <button onClick={() => randomReview(data, person)}>
-            Surprise Me
-          </button>
+          <button onClick={() => randomReview()}>Surprise Me</button>
         </div>
       </div>
     </>
